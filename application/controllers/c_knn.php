@@ -13,12 +13,6 @@ class c_knn extends CI_Controller {
 
     public function knnCalculation($param) {
         $i = 1;
-        //count score average
-//        $mathAvg = ($param['math_assignment'] + $param['math_mid'] + $param['math_final']) / 3;
-//        $ipaAvg = ($param['science_assignment'] + $param['science_mid'] + $param['science_final']) / 3;
-//        $ipsAvg = ($param['social_assignment'] + $param['social_mid'] + $param['social_final']) / 3;
-//        $indoAvg = ($param['indonesian_assignment'] + $param['indonesian_mid'] + $param['indonesian_final']) / 3;
-//        $englishAvg = ($param['english_assignment'] + $param['english_mid'] + $param['english_final']) / 3;
 
         $mathAvg = ($param[0][0] + $param[0][1] + $param[0][2]) / 3;
         $ipaAvg = ($param[1][0] + $param[1][1] + $param[1][2]) / 3;
@@ -93,74 +87,68 @@ class c_knn extends CI_Controller {
     }
 
     function super_function() {
-        $student = array(
-            'std_name' => $this->input->post('std_name'),
-            'std_class' => $this->input->post('std_class')
-        );
+        if (!empty($this->input->post('std_nisn'))) {
 
-//        $score = array(
-//            'math_assignment' => $this->input->post('math_assignment'),
-//            'math_mid' => $this->input->post('math_mid'),
-//            'math_final' => $this->input->post('math_final'),
-//            'science_assignment' => $this->input->post('science_assignment'),
-//            'science_mid' => $this->input->post('science_mid'),
-//            'science_final' => $this->input->post('science_final'),
-//            'social_assignment' => $this->input->post('social_assignment'),
-//            'social_mid' => $this->input->post('social_mid'),
-//            'social_final' => $this->input->post('social_final'),
-//            'indonesian_assignment' => $this->input->post('indonesian_assignment'),
-//            'indonesian_mid' => $this->input->post('indonesian_mid'),
-//            'indonesian_final' => $this->input->post('indonesian_final'),
-//            'english_assignment' => $this->input->post('english_assignment'),
-//            'english_mid' => $this->input->post('english_mid'),
-//            'english_final' => $this->input->post('english_final')
-//        );
+            $student = array(
+                'std_nisn' => $this->input->post('std_nisn'),
+                'std_name' => $this->input->post('std_name'),
+                'std_class' => $this->input->post('std_class'),
+                'std_interest' => $this->input->post('std_interest')
+            );
+            $score = array(
+                array(
+                    $this->input->post('math_assignment'),
+                    $this->input->post('math_mid'),
+                    $this->input->post('math_final')),
+                array(
+                    $this->input->post('science_assignment'),
+                    $this->input->post('science_mid'),
+                    $this->input->post('science_final')),
+                array(
+                    $this->input->post('social_assignment'),
+                    $this->input->post('social_mid'),
+                    $this->input->post('social_final')),
+                array(
+                    $this->input->post('indonesian_assignment'),
+                    $this->input->post('indonesian_mid'),
+                    $this->input->post('indonesian_final')),
+                array(
+                    $this->input->post('english_assignment'),
+                    $this->input->post('english_mid'),
+                    $this->input->post('english_final'))
+            );
 
-        $score = array(
-            array(
-                $this->input->post('math_assignment'),
-                $this->input->post('math_mid'),
-                $this->input->post('math_final')),
-            array(
-                $this->input->post('science_assignment'),
-                $this->input->post('science_mid'),
-                $this->input->post('science_final')),
-            array(
-                $this->input->post('social_assignment'),
-                $this->input->post('social_mid'),
-                $this->input->post('social_final')),
-            array(
-                $this->input->post('indonesian_assignment'),
-                $this->input->post('indonesian_mid'),
-                $this->input->post('indonesian_final')),
-            array(
-                $this->input->post('english_assignment'),
-                $this->input->post('english_mid'),
-                $this->input->post('english_final'))
-        );
+            $student_add = $this->student_add($student);
+            if ($student_add) {
+                $student_last = $this->m_knn->student_get_last();
 
-        $student_add = $this->student_add($student);
-        if ($student_add) {
-            $student_last = $this->m_knn->student_get_last();
+                $pushed_array = array('std_id' => $student_last->id);
+                $merged_score = array_merge($score, $pushed_array);
 
-            $pushed_array = array('std_id' => $student_last->id);
-            $merged_score = array_merge($score, $pushed_array);
+                $classification = $this->knnCalculation($merged_score);
+                $merged_result = array_merge($classification, $pushed_array);
 
-            $classification = $this->knnCalculation($merged_score);
-            $merged_result = array_merge($classification, $pushed_array);
-
-            $class_result = $this->m_knn->result_insert($merged_result);
-            $score_add = $this->m_knn->score_add($score, $student_last->id);
-
-            $this->load->view('input_score');
+                $class_result = $this->m_knn->result_insert($merged_result);
+                $score_add = $this->m_knn->score_add($score, $student_last->id);
+            }
         }
+         $this->thankyou_page();
     }
 
     function student_add($param) {
         return $this->m_knn->student_add($param);
     }
 
-    function score_add($score, $studentId) {
+    function thankyou_page() {
+        $data['result'] = $this->m_knn->GetResultStudent();
+        $this->load->view('thankyou_page', $data);
+    }
+    
+    function all_result() {
+        $data['result'] = $this->m_knn->GetDataStudent();
+        $this->load->view('tables', $data);
+    }
+                function score_add($score, $studentId) {
         return $this->m_knn->score_add($score, $studentId);
     }
 

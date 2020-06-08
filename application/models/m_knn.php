@@ -10,6 +10,11 @@ class m_knn extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+    
+    function GetResultStudent() {
+        $query = $this->db->query("select * from knn_student a join knn_result_class b on a.id = b.std_id where a.id = (select max(id) from knn_student)");
+        return $query->result();
+    }
 
     function student_add($params) {
         if ($this->db->insert('student', $params)) {
@@ -50,6 +55,15 @@ class m_knn extends CI_Model {
         $this->db->from('student');
         $query = $this->db->get();
         return $query->row();
+    }
+    
+    function GetDataStudent() {
+        $this->db->select("student.*, result_class.next_class");
+        $this->db->from ('student');
+        $this->db->join ('result_class', 'result_class.std_id = student.id');
+        $this->db->order_by ('id asc');
+        $query = $this->db->get();
+        return $query->result();
     }
 
 }

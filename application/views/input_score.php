@@ -41,36 +41,36 @@
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
                             <a class="nav-link" href="<?php echo base_url(); ?>c_knn/knnCalculation"
-                                ><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                               ><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard</a
                             >
                             <div class="sb-sidenav-menu-heading">Interface</div>
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"
-                                ><div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                               ><div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Class Classifier
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
-                            ></a>
+                                ></a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="<?php echo base_url(); ?>c_knn/template/input_score">Input Score</a><a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a></nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages"
-                                ><div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                               ><div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Student Data
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
-                            ></a>
+                                ></a>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth"
-                                        >Authentication
+                                       >Authentication
                                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
-                                    ></a>
+                                        ></a>
                                     <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="login.html">Login</a><a class="nav-link" href="register.html">Register</a><a class="nav-link" href="password.html">Forgot Password</a></nav>
                                     </div>
                                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError"
-                                        >Error
+                                       >Error
                                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
-                                    ></a>
+                                        ></a>
                                     <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="401.html">401 Page</a><a class="nav-link" href="404.html">404 Page</a><a class="nav-link" href="500.html">500 Page</a></nav>
                                     </div>
@@ -78,7 +78,7 @@
                             </div>
                             <div class="sb-sidenav-menu-heading">Addons</div>
                             <a class="nav-link" href="charts.html"
-                                ><div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                               ><div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Archive</a
                             ><a class="nav-link" href="tables.html"
                                 ><div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
@@ -110,12 +110,34 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="form-group">
+                                                <label class="small mb-1">Student's NISN</label>
+                                                <input class="form-control py-4" name="std_nisn" type="number" max="9999" placeholder="NISN Number" required autocomplete="off"/>
+                                            </div>
+                                            <div class="form-group">
                                                 <label class="small mb-1">Student's Name</label>
                                                 <input class="form-control py-4" name="std_name" type="text" placeholder="John Doe..." required autocomplete="off"/>
                                             </div>
+                                            <!-- <div class="form-group">
+                                                 <label class="small mb-1">Student's Class</label>
+                                                 <input class="form-control py-4" name="std_class" type="text" placeholder="XI B..." required autocomplete="off"/>
+                                             </div>
+                                            -->   
                                             <div class="form-group">
                                                 <label class="small mb-1">Student's Class</label>
-                                                <input class="form-control py-4" name="std_class" type="text" placeholder="XI B..." required autocomplete="off"/>
+                                                <select name="std_class" class="form-control">
+                                                    <option value="XI A"> XI A </option>
+                                                    <option value="XI B"> XI B </option>
+                                                    <option value="XI C"> XI C </option>
+                                                    <option value="XI D"> XI D </option>
+                                                    <option value="XI E"> XI E </option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="small mb-1">Student's Interest</label>
+                                                <select name="std_interest" class="form-control">
+                                                    <option value="IPA"> IPA </option>
+                                                    <option value="IPS"> IPS </option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
