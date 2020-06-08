@@ -10,7 +10,7 @@ class m_knn extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
-    
+
     function GetResultStudent() {
         $query = $this->db->query("select * from knn_student a join knn_result_class b on a.id = b.std_id where a.id = (select max(id) from knn_student)");
         return $query->result();
@@ -34,16 +34,16 @@ class m_knn extends CI_Model {
 
     function score_add($score, $studentId) {
         $success = 0;
-        for($i=0; $i<count($score); $i++){
+        for ($i = 0; $i < count($score); $i++) {
             $data = array(
                 'std_id' => $studentId,
                 'assignment_score' => $score[$i][0],
                 'mid_test_score' => $score[$i][1],
                 'final_test_score' => $score[$i][2],
-                'subject_id' => $i+1
+                'subject_id' => $i + 1
             );
             $insert = $this->db->insert('std_score', $data);
-            if($insert){
+            if ($insert) {
                 $success++;
             }
         }
@@ -56,12 +56,12 @@ class m_knn extends CI_Model {
         $query = $this->db->get();
         return $query->row();
     }
-    
+
     function GetDataStudent() {
         $this->db->select("student.*, result_class.next_class");
-        $this->db->from ('student');
-        $this->db->join ('result_class', 'result_class.std_id = student.id');
-        $this->db->order_by ('id asc');
+        $this->db->from('student');
+        $this->db->join('result_class', 'result_class.std_id = student.id');
+        $this->db->order_by('id asc');
         $query = $this->db->get();
         return $query->result();
     }

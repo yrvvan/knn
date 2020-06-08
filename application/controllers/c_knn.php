@@ -132,7 +132,7 @@ class c_knn extends CI_Controller {
                 $score_add = $this->m_knn->score_add($score, $student_last->id);
             }
         }
-         $this->thankyou_page();
+        $this->thankyou_page();
     }
 
     function student_add($param) {
@@ -143,12 +143,13 @@ class c_knn extends CI_Controller {
         $data['result'] = $this->m_knn->GetResultStudent();
         $this->load->view('thankyou_page', $data);
     }
-    
+
     function all_result() {
         $data['result'] = $this->m_knn->GetDataStudent();
         $this->load->view('tables', $data);
     }
-                function score_add($score, $studentId) {
+
+    function score_add($score, $studentId) {
         return $this->m_knn->score_add($score, $studentId);
     }
 
